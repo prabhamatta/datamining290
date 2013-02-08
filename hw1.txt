@@ -1,4 +1,4 @@
-I chose to work on Yelp Academic Dataset
+I chose to work on Yelp Academic Dataset.
 
 Q1.What are the types of data available to you?
 1.Yelp dataset has details regarding all the businesses near universities campuses
@@ -22,7 +22,6 @@ Q4.Provide an "interesting" record, explain its properties and why it is interes
 {"votes": {"funny": 6277, "useful": 4698, "cool": 5325}, "user_id": "XHuNSjrPA3Vyi7n4iVhZaQ", "name": "Maria D.", "url":"http://www.yelp.com/user_details?userid=XHuNSjrPA3Vyi7n4iVhZaQ", "average_stars": 3.7654909437559598, "review_count": 1049, "type": "user"}
 
 The user Id "Maria" is tagged funny, useful and cool lot of times.. apparently she has a huge fan following on Yelp itself. Her avg review starts is 3.7, which seems pretty reasonable and practical. I wanted to read her reviews and tried to search her name in Yelp ( later realised that I could have used her user Id url given in the json).
-
 Details of Maria D : she lives in San Francisco and the funny thing I saw in her profile is that she loves "dopamine" :)
 Her blog page : http://mariadiaz.tumblr.com/tagged/college
 From her blog page, I found her Twitter page : https://twitter.com/mariadiaz
