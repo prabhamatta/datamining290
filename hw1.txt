@@ -1,0 +1,39 @@
+I chose to work on Yelp Academic Dataset.
+
+Q1.What are the types of data available to you?
+1.Yelp dataset has details regarding all the businesses near universities campuses
+2. The data is in json format 
+3. each object is determined whether it is a business or a user or a review from its variable "type"
+
+
+
+Q2.For data sets: how many records are in the data set?
+yelp dataset has 474434 lines
+wc -l yelp_academic_dataset.json
+
+
+
+Q3.For API: what are the limits on fetching data?
+Many API require authentication key to be called and only fixed number. of calls can be called per min or hour. 
+
+
+
+Q4.Provide an "interesting" record, explain its properties and why it is interesting
+{"votes": {"funny": 6277, "useful": 4698, "cool": 5325}, "user_id": "XHuNSjrPA3Vyi7n4iVhZaQ", "name": "Maria D.", "url":"http://www.yelp.com/user_details?userid=XHuNSjrPA3Vyi7n4iVhZaQ", "average_stars": 3.7654909437559598, "review_count": 1049, "type": "user"}
+
+The user Id "Maria" is tagged funny, useful and cool lot of times.. apparently she has a huge fan following on Yelp itself. Her avg review starts is 3.7, which seems pretty reasonable and practical. I wanted to read her reviews and tried to search her name in Yelp ( later realised that I could have used her user Id url given in the json).
+Details of Maria D : she lives in San Francisco and the funny thing I saw in her profile is that she loves "dopamine" :)
+Her blog page : http://mariadiaz.tumblr.com/tagged/college
+From her blog page, I found her Twitter page : https://twitter.com/mariadiaz
+Her Full name :Maria Diaz
+
+Haha, there is no privacy in this cyber world.
+
+
+
+Q5.What are 3 questions you could answer using your data?
+
+1. How many businesses are near UC Berkeley
+2. Which business has been reviewed the most near UC Berkeley
+3.Which is the best restaurant to eat near UC Berkeley( restaurant having the highest reviews near UC Berkeley)
+
