@@ -25,7 +25,6 @@ class UserSimilarity(MRJob):
         yield ["dummy", [user_id, list_businesses]]    
         
     def create_combinations(self, dummy_var, list_of_user_businesses):
-        """ returns "dummy", list of [user_id,Businesses]"""
         mydict = {}
         for u, b in list_of_user_businesses:
             if u not in mydict:
