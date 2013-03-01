@@ -35,7 +35,7 @@ def get_gini(item_counter, total=0):
     if total == 0:
         for k,v in item_counter.items():
             total += v
-        print "total in gini..",total
+        print "total in gini..",total,item_counter
             
     for item,count in item_counter.items():
         sum_frac += pow(float(count)/total,2)
@@ -81,17 +81,44 @@ def get_gini_for_partition(partition,amt_name_list):
     return gini_of_partition
         
 
-##### Q3. Find a best split of a continuous field
-# I am using contribution amount as the continuous field
-#Method1: using mean as the partition
-mean = sum(float(tup[0]) for tup in amt_name_list)/total_records
+##### Q3 Find a best split of a continuous field
+### I am using contribution amount as the continuous field
 
+
+###Method1: using mean of the contibution amt as the partition
+mean = sum(float(tup[0]) for tup in amt_name_list)/total_records
 gini_partition = get_gini_for_partition(mean,amt_name_list)
+
+###Method2: splitting contribution amount as the partition
+def best_gini_meth2(amt_name_list,total_records):
+    sorted_amt_name_list = sorted(amt_name_list)
+    partition_gini_list = []
+    
+    for i in range(total_records-1):
+        counter_below, counter_above = coll.Counter(), coll.Counter()
+        records_below = i+1
+        records_above = total_records-(i+1)
+        
+        counter_below = coll.Counter([tup[0] for tup in sorted_amt_name_list[:i+1]])
+        counter_above = coll.Counter([tup[0] for tup in sorted_amt_name_list[i+1:]])
+        gini_below = get_gini(counter_below,records_below)
+        gini_above = get_gini(counter_above, records_above)            
+        
+        gini_of_partition = (float(records_above)/total_records)*gini_above + (float(records_below)/total_records)*gini_below
+    
+        partition_gini_list.append((gini_of_partition,sorted_amt_name_list[i][0]))
+    min_gini = min(partition_gini_list)
+    return min_gini
 
 
 #print cand_nm_counter
 print "Total Records: %s"%(total_records)
 print "Q1: Gini Index: %s" % gini
 print "Q2: Gini Index after split: %s" % split_gini
+print "**********************************"
 print "Extra Credit Method1 ==> Mean as partition: %s"%(mean)
 print "Gini Index for Method1: %s" %(gini_partition)
+print "**********************************"
+print "Extra Credit Method2 ==> Finding minimum gini with  each pair as partition"
+min_gini = best_gini_meth2(amt_name_list,total_records)
+print "Gini Index for Method2: %s with partition: %s" %(min_gini[1], min_gini[0])
