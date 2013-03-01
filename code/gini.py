@@ -18,18 +18,17 @@ cand_nm_counter = coll.Counter()
 zipcodeDict = coll.defaultdict(list)
 total_records = 0
 sum_frac = 0
+amt_name_list = []
 
 ############### Read through files 
 for row in csv.reader(fileinput.input()):
     if not fileinput.isfirstline():
         #first time does not go inside this
-        #replace line below with steps to save information to calculate Gini Index
-        #row[cand_nm], row[contbr_zip]
         cand_nm_counter[row[cand_nm]] += 1
         total_records +=1
         #zipcodeDict willbe of the form have {'zip1': ['ob', 'ob', 'ro'], 'zip2': ['ob']}
-        #print row[contbr_zip],row[cand_nm]
-        zipcodeDict[row[contbr_zip]].append(row[cand_nm])     
+        zipcodeDict[row[contbr_zip]].append(row[cand_nm])
+        amt_name_list.append((float(row[contb_receipt_amt]),row[cand_nm]))
         
 def get_gini(item_counter, total=0):
     sum_frac = 0
@@ -65,14 +64,34 @@ for k,v in zipcodeDict.items():
         
 split_gini = weighted_avg_gini  # weighted average of the Gini Indexes using candidate names, split up by zip code
 
+def get_gini_for_partition(partition,amt_name_list):
+    records_below,records_above = 0,0
+    counter_below, counter_above = coll.Counter(), coll.Counter()
+    gini_below, gini_above = 0, 0
+    for amt,name in amt_name_list:
+        if amt <= partition:
+            counter_below[name] += 1
+            records_below += 1
+        else:
+            counter_above[name] += 1
+            records_above += 1
+    gini_below = get_gini(counter_below,records_below)
+    gini_above = get_gini(counter_above, records_above)    
+    gini_of_partition = (float(records_above)/(records_above+records_below))*gini_above + (float(records_below)/(records_above+records_below))*gini_below
+    return gini_of_partition
+        
 
 ##### Q3. Find a best split of a continuous field
 # I am using contribution amount as the continuous field
+#Method1: using mean as the partition
+mean = sum(float(tup[0]) for tup in amt_name_list)/total_records
+
+gini_partition = get_gini_for_partition(mean,amt_name_list)
 
 
-
-print cand_nm_counter
+#print cand_nm_counter
 print "Total Records: %s"%(total_records)
-print "Gini Index: %s" % gini
-print "Gini Index after split: %s" % split_gini
-
+print "Q1: Gini Index: %s" % gini
+print "Q2: Gini Index after split: %s" % split_gini
+print "Extra Credit Method1 ==> Mean as partition: %s"%(mean)
+print "Gini Index for Method1: %s" %(gini_partition)
