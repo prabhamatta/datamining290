@@ -14,9 +14,10 @@ class UniqueReview(MRJob):
             ###
             # TODO: for each word in the review, yield the correct key,value
             # pair:
-            # for word in ____:
-            #   yield [ ___ , ___ ]
-            ##/
+            if record['type'] == 'review':
+                for word in WORD_RE.findall(record['text']):
+                    yield [word.lower(), record['review_id']]
+            
 
     def count_reviews(self, word, review_ids):
         """Count the number of reviews a word has appeared in.  If it is a
@@ -26,24 +27,24 @@ class UniqueReview(MRJob):
         unique_reviews = set(review_ids)  # set() uniques an iterator
         ###
         # TODO: yield the correct pair when the desired condition is met:
-        # if ___:
-        #     yield [ ___ , ___ ]
-        ##/
+        if len(unique_reviews) == 1:
+            yield [ list(unique_reviews)[0] , 1 ]
+       
 
     def count_unique_words(self, review_id, unique_word_counts):
         """Output the number of unique words for a given review_id"""
         ###
         # TODO: summarize unique_word_counts and output the result
         # 
-        ##/
+        yield [review_id, sum(unique_word_counts)]
 
     def aggregate_max(self, review_id, unique_word_count):
         """Group reviews/counts together by the MAX statistic."""
         ###
         # TODO: By yielding using the same keyword, all records will appear in
         # the same reducer:
-        # yield ["MAX", [ ___ , ___]]
-        ##/
+        yield ["MAX", [ unique_word_count, review_id]]
+       
 
     def select_max(self, stat, count_review_ids):
         """Given a list of pairs: [count, review_id], select on the pair with
@@ -52,9 +53,9 @@ class UniqueReview(MRJob):
         # TODO: find the review with the highest count, yield the review_id and
         # the count. HINT: the max() function will compare pairs by the first
         # number
-        #
-        #/
-
+        temp =  max(count_review_ids)
+        yield [temp[1],temp[0]]
+        
     def steps(self):
         """TODO: Document what you expect each mapper and reducer to produce:
         mapper1: <line, record> => <key, value>
