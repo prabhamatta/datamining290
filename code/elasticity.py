@@ -67,7 +67,7 @@ if __name__ == '__main__':
     print "***************************"
     print "Ques 3a: What weekday price should we set to optimize max revenue??\n"
      
-    print "Maximum revenue = ",max_rev_weekday
+    print "Optimum revenue = ",max_rev_weekday
     print "Optimum price = ",optimum_price_weekday
     print "Num of rooms to be rented = ",sorted_weekday[0][1]
         
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     print "***************************"
     print "Ques 3b: What weekend price should we set to optimize max revenue??\n"  
     
-    print "Maximum revenue = ",max_rev_weekend
+    print "Optimum revenue = ",max_rev_weekend
     print "Optimum price = ",optimum_price_weekend
     print "Num of rooms to be rented = ",sorted_weekend[0][1]    
     #print max_rev_weekend,optimum_price_weekend
